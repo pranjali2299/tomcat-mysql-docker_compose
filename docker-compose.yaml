@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  db:
+    build: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: "admin123"
+      MYSQL_DATABASE: student
+    restart: always
+  web:
+    build: ./web
+    environment:
+      MYSQL_DATABASE: student
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: "admin123"
+      MYSQL_HOST: database-1.cbqg2cmmyt06.ap-south-1.rds.amazonaws.com
+    ports:
+      - "8085:8080"
+    depends_on:
+      - db
+    restart: on-failure
